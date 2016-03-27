@@ -16,4 +16,4 @@
 #### 5. Edit configuration
   Copy `config.default.yaml` to `config.yaml` and edit configuration.
 #### 6. Build and Run project
-  `gb build && bin/rpi.ws.client run`
+  `gb build && bin/rpi.mqtt.client run`
