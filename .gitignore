@@ -1,0 +1,13 @@
+.idea/
+.git/
+*.xmind
+
+config.yaml
+
+bin/
+pkg/
+vendor/src/
+
+mem.go
+temp.go
+volt.go
