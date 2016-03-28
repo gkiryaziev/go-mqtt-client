@@ -19,7 +19,8 @@ func (this *raspberry) SystemMemory(timeout int, qos byte) {
 
 	time.Sleep(500 * time.Millisecond)
 
-	var memTotal, memFree, memAvailable string
+	var memFree, memAvailable string
+	// var memTotal string
 
 	for {
 		sysMem := meminfo.Clean(command.Exec("cat", "/proc/meminfo"), "MemTotal:", "MemFree:", "MemAvailable:")
@@ -27,7 +28,7 @@ func (this *raspberry) SystemMemory(timeout int, qos byte) {
 		if sysMem != nil {
 
 			// publish total memory
-			if memTotal != sysMem["MemTotal"] {
+			// if memTotal != sysMem["MemTotal"] {
 				if token := this.client.Publish(topicMemTotal, qos, false, sysMem["MemTotal"]); token.Wait() && token.Error() != nil {
 					log.Println(token.Error())
 				}
@@ -37,8 +38,8 @@ func (this *raspberry) SystemMemory(timeout int, qos byte) {
 					log.Println(topicMemTotal, sysMem["MemTotal"])
 				}
 
-				memTotal = sysMem["MemTotal"]
-			}
+				// memTotal = sysMem["MemTotal"]
+			// }
 
 			// publish free memory
 			if memFree != sysMem["MemFree"] {

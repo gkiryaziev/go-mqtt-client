@@ -51,14 +51,14 @@ func (this *raspberry) CpuCoreVolt(timeout int, qos byte) {
 
 	time.Sleep(500 * time.Millisecond)
 
-	var volt string
+	// var volt string
 
 	for {
 		cpuCoreVolt := vcgencmd.Clean(command.Exec("vcgencmd", "measure_volts", "core"), "volt=", "V")
 
 		if cpuCoreVolt != "" {
 			// publish cpu core volt
-			if volt != cpuCoreVolt {
+			// if volt != cpuCoreVolt {
 				if token := this.client.Publish(topic, qos, false, cpuCoreVolt); token.Wait() && token.Error() != nil {
 					log.Println(token.Error())
 				}
@@ -68,8 +68,8 @@ func (this *raspberry) CpuCoreVolt(timeout int, qos byte) {
 					log.Println(topic, cpuCoreVolt)
 				}
 
-				volt = cpuCoreVolt
-			}
+				// volt = cpuCoreVolt
+			// }
 		}
 
 		time.Sleep(time.Duration(timeout) * time.Millisecond)
