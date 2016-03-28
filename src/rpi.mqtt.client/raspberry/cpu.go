@@ -17,14 +17,14 @@ func (this *raspberry) CpuTemp(timeout int, qos byte) {
 
 	time.Sleep(500 * time.Millisecond)
 
-	var temp string
+	// var temp string
 
 	for {
 		cpuTemp := vcgencmd.Clean(command.Exec("vcgencmd", "measure_temp"), "temp=", "'C")
 
 		if cpuTemp != "" {
 			// publish cpu temperature
-			if temp != cpuTemp {
+			// if temp != cpuTemp {
 				if token := this.client.Publish(topic, qos, false, cpuTemp); token.Wait() && token.Error() != nil {
 					log.Println(token.Error())
 				}
@@ -34,8 +34,8 @@ func (this *raspberry) CpuTemp(timeout int, qos byte) {
 					log.Println(topic, cpuTemp)
 				}
 
-				temp = cpuTemp
-			}
+				// temp = cpuTemp
+			// }
 		}
 
 		time.Sleep(time.Duration(timeout) * time.Millisecond)
