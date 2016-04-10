@@ -14,6 +14,13 @@ var (
 
 func (this *raspberry) Led0(qos byte) error {
 
+	// unsubscribe
+	defer func() {
+		if token := this.client.Unsubscribe(sTopic); token.Wait() && token.Error() != nil {
+			log.Println(token.Error())
+		}
+	}()
+
 	sTopic = this.name + "/LED0/ACTION"
 	pTopic = this.name + "/LED0/STATUS"
 	gQos   = qos
@@ -30,18 +37,11 @@ func (this *raspberry) Led0(qos byte) error {
 
 var led0Handler mqtt.MessageHandler = func(client *mqtt.Client, msg mqtt.Message) {
 
-	//// unsubscribe
-	//defer func() {
-	//	if token := client.Unsubscribe(msg.Topic()); token.Wait() && token.Error() != nil {
-	//		log.Println(token.Error())
-	//	}
-	//}()
-
 	// receive message and DO
 
 	// debug
 	if gDebug {
-		log.Println("[SUB]", msg.Topic(), msg.Payload())
+		log.Println("[SUB]", msg.Topic(), string(msg.Payload()))
 	}
 
 	// publish result
