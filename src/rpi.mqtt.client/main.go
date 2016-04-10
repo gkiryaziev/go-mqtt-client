@@ -38,8 +38,11 @@ func main() {
 	rpi := raspberry.NewRaspberry(client, config.Name, config.Debug)
 
 	// Run publisher
-	go rpi.CpuTemp(config.Timeout, 0)
-	go rpi.CpuCoreVolt(config.Timeout, 0)
+	rpi.Cpu.Themperature.Publish(config.Timeout, 0)
+	rpi.Cpu.CoreVolt.Publish(config.Timeout, 0)
+
+	//go rpi.CpuTemp(config.Timeout, 0)
+	//go rpi.CpuCoreVolt(config.Timeout, 0)
 	go rpi.SystemMemory(config.Timeout, 0)
 
 	// Run subscribe

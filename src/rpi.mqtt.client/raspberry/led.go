@@ -14,12 +14,12 @@ var (
 
 func (this *raspberry) Led0(qos byte) error {
 
-	// unsubscribe
-	defer func() {
-		if token := this.client.Unsubscribe(sTopic); token.Wait() && token.Error() != nil {
-			log.Println(token.Error())
-		}
-	}()
+	//// unsubscribe
+	//defer func() {
+	//	if token := this.client.Unsubscribe(sTopic); token.Wait() && token.Error() != nil {
+	//		log.Println(token.Error())
+	//	}
+	//}()
 
 	sTopic = this.name + "/LED0/ACTION"
 	pTopic = this.name + "/LED0/STATUS"
