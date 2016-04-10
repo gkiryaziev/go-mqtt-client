@@ -31,7 +31,7 @@ func (this *raspberry) CpuTemp(timeout int, qos byte) {
 
 				// debug
 				if this.debug {
-					log.Println(topic, cpuTemp)
+					log.Println("[PUB]", topic, cpuTemp)
 				}
 
 				// temp = cpuTemp
@@ -65,7 +65,7 @@ func (this *raspberry) CpuCoreVolt(timeout int, qos byte) {
 
 				// debug
 				if this.debug {
-					log.Println(topic, cpuCoreVolt)
+					log.Println("[PUB]", topic, cpuCoreVolt)
 				}
 
 				// volt = cpuCoreVolt

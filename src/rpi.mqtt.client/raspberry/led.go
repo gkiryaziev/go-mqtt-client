@@ -30,14 +30,10 @@ func (this *raspberry) Led0(qos byte) error {
 
 var led0Handler mqtt.MessageHandler = func(client *mqtt.Client, msg mqtt.Message) {
 
+	// unsubscribe
 	defer func() {
 		if token := client.Unsubscribe(msg.Topic()); token.Wait() && token.Error() != nil {
 			log.Println(token.Error())
-		}
-
-		// debug
-		if gDebug {
-			log.Println("Unsubscribe from", msg.Topic())
 		}
 	}()
 
@@ -45,7 +41,7 @@ var led0Handler mqtt.MessageHandler = func(client *mqtt.Client, msg mqtt.Message
 
 	// debug
 	if gDebug {
-		log.Println(msg.Topic(), msg.Payload())
+		log.Println("[SUB]", msg.Topic(), msg.Payload())
 	}
 
 	// publish result
@@ -55,6 +51,6 @@ var led0Handler mqtt.MessageHandler = func(client *mqtt.Client, msg mqtt.Message
 
 	// debug
 	if gDebug {
-		log.Println(pTopic, "OFF")
+		log.Println("[PUB]", pTopic, "OFF")
 	}
 }

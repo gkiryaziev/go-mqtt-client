@@ -35,7 +35,7 @@ func (this *raspberry) SystemMemory(timeout int, qos byte) {
 
 				// debug
 				if this.debug {
-					log.Println(topicMemTotal, sysMem["MemTotal"])
+					log.Println("[PUB]", topicMemTotal, sysMem["MemTotal"])
 				}
 
 				// memTotal = sysMem["MemTotal"]
@@ -49,7 +49,7 @@ func (this *raspberry) SystemMemory(timeout int, qos byte) {
 
 				// debug
 				if this.debug {
-					log.Println(topicMemFree, sysMem["MemFree"])
+					log.Println("[PUB]", topicMemFree, sysMem["MemFree"])
 				}
 
 				memFree = sysMem["MemFree"]
@@ -63,7 +63,7 @@ func (this *raspberry) SystemMemory(timeout int, qos byte) {
 
 				// debug
 				if this.debug {
-					log.Println(topicMemAvailable, sysMem["MemAvailable"])
+					log.Println("[PUB]", topicMemAvailable, sysMem["MemAvailable"])
 				}
 
 				memAvailable = sysMem["MemAvailable"]
