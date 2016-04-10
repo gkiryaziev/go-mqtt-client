@@ -42,6 +42,10 @@ func main() {
 	go rpi.CpuCoreVolt(config.Timeout, 0)
 	go rpi.SystemMemory(config.Timeout, 0)
 
+	// Run subscribe
+	err = rpi.Led0(0)
+	CheckError(err)
+
 	// wait for terminating
 	for {
 		select {
