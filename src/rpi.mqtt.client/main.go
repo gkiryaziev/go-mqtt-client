@@ -43,11 +43,16 @@ func main() {
 	rpi.Cpu.CoreVolt.Publish(config.Timeout, 0)
 	rpi.System.Memory.Publish(config.Timeout, 0)
 
+	// Run subscribing
+	rpi.System.Led.Subscribe(0)
+
 	// wait for terminating
 	for {
 		select {
 		case <-interrupt:
 			log.Println("Clean and terminating...")
+
+			rpi.System.Led.UnSubscribe()
 
 			// disconnecting
 			client.Disconnect(250)

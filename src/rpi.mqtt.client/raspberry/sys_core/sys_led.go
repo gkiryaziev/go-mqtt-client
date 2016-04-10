@@ -52,9 +52,19 @@ func (this *Led) PublishOnce(qos byte) {
 // Subscribe
 func (this *Led) Subscribe(qos byte) {
 
-	log.Println("[RUN] Subscribing:", this.topic)
+	log.Println("[RUN] Subscribing:", this.topic + "/ACTION")
 
 	if token := this.client.Subscribe(this.topic + "/ACTION", qos, ledOnMessage); token.Wait() && token.Error() != nil {
+		log.Println(token.Error())
+	}
+}
+
+// Subscribe
+func (this *Led) UnSubscribe() {
+
+	log.Println("[RUN] UnSubscribing:", this.topic + "/ACTION")
+
+	if token := this.client.Unsubscribe(this.topic + "/ACTION"); token.Wait() && token.Error() != nil {
 		log.Println(token.Error())
 	}
 }
