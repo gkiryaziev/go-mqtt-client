@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"rpi.mqtt.client/command"
+	"rpi.mqtt.client/service"
 	"rpi.mqtt.client/service/vcgencmd"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
@@ -24,9 +24,10 @@ func newThemperature(c *mqtt.Client, name string, debug bool) *Themperature {
 	}
 }
 
+// Publish core themperature in goroutine with timeout
 func (this *Themperature) Publish(timeout int, qos byte) {
 	go func() {
-		log.Println("Start publishing: ", this.topic)
+		log.Println("[RUN] Publishing:", this.topic)
 
 		time.Sleep(500 * time.Millisecond)
 
@@ -37,9 +38,10 @@ func (this *Themperature) Publish(timeout int, qos byte) {
 	}()
 }
 
+// Publish core themperature only once
 func (this *Themperature) PublishOnce(qos byte) {
 
-	cpuTemp := vcgencmd.Clean(command.Exec("vcgencmd", "measure_temp"), "temp=", "'C")
+	cpuTemp := vcgencmd.Clean(service.CmdExec("vcgencmd", "measure_temp"), "temp=", "'C")
 
 	if cpuTemp != "" {
 
@@ -55,4 +57,5 @@ func (this *Themperature) PublishOnce(qos byte) {
 	}
 }
 
+// Subscribe
 func (this *Themperature) Subscribe() {}

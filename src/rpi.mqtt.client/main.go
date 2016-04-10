@@ -7,8 +7,8 @@ import (
 	"syscall"
 
 	"rpi.mqtt.client/conf"
-	"rpi.mqtt.client/service"
 	"rpi.mqtt.client/raspberry"
+	"rpi.mqtt.client/service"
 )
 
 // check error
@@ -35,15 +35,13 @@ func main() {
 	)
 	CheckError(err)
 
+	// new instance of mqtt client
 	rpi := raspberry.NewRaspberry(client, config.Name, config.Debug)
 
 	// Run publisher
 	rpi.Cpu.Themperature.Publish(config.Timeout, 0)
 	rpi.Cpu.CoreVolt.Publish(config.Timeout, 0)
-
-	//go rpi.CpuTemp(config.Timeout, 0)
-	//go rpi.CpuCoreVolt(config.Timeout, 0)
-	go rpi.SystemMemory(config.Timeout, 0)
+	rpi.System.Memory.Publish(config.Timeout, 0)
 
 	// Run subscribe
 	err = rpi.Led0(0)

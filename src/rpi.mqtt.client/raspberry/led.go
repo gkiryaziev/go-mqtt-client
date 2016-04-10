@@ -26,7 +26,7 @@ func (this *raspberry) Led0(qos byte) error {
 	gQos   = qos
 	gDebug = this.debug
 
-	log.Println("Start subscribing: ", sTopic)
+	log.Println("[RUN] Subscribing:", sTopic)
 
 	if token := this.client.Subscribe(sTopic, gQos, led0Handler); token.Wait() && token.Error() != nil {
 		return token.Error()

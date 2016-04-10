@@ -4,28 +4,30 @@ import (
 	"log"
 	"time"
 
-	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"rpi.mqtt.client/service"
 	"rpi.mqtt.client/service/vcgencmd"
-	"rpi.mqtt.client/command"
+
+	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
 type CoreVolt struct {
 	client *mqtt.Client
 	debug  bool
-	topic string
+	topic  string
 }
 
 func newCoreVolt(c *mqtt.Client, name string, debug bool) *CoreVolt {
-	return &CoreVolt {
+	return &CoreVolt{
 		client: c,
 		debug:  debug,
 		topic:  name + "/CPU/CORE/VOLT",
 	}
 }
 
+// Publish core volt in goroutine with timeout
 func (this *CoreVolt) Publish(timeout int, qos byte) {
 	go func() {
-		log.Println("Start publishing: ", this.topic)
+		log.Println("[RUN] Publishing:", this.topic)
 
 		time.Sleep(500 * time.Millisecond)
 
@@ -36,9 +38,10 @@ func (this *CoreVolt) Publish(timeout int, qos byte) {
 	}()
 }
 
+// Publish core volt only once
 func (this *CoreVolt) PublishOnce(qos byte) {
 
-	cpuCoreVolt := vcgencmd.Clean(command.Exec("vcgencmd", "measure_volts", "core"), "volt=", "V")
+	cpuCoreVolt := vcgencmd.Clean(service.CmdExec("vcgencmd", "measure_volts", "core"), "volt=", "V")
 
 	if cpuCoreVolt != "" {
 
@@ -53,4 +56,5 @@ func (this *CoreVolt) PublishOnce(qos byte) {
 	}
 }
 
+// Subscribe
 func (this *CoreVolt) Subscribe() {}
