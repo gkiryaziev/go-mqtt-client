@@ -30,12 +30,12 @@ func (this *raspberry) Led0(qos byte) error {
 
 var led0Handler mqtt.MessageHandler = func(client *mqtt.Client, msg mqtt.Message) {
 
-	// unsubscribe
-	defer func() {
-		if token := client.Unsubscribe(msg.Topic()); token.Wait() && token.Error() != nil {
-			log.Println(token.Error())
-		}
-	}()
+	//// unsubscribe
+	//defer func() {
+	//	if token := client.Unsubscribe(msg.Topic()); token.Wait() && token.Error() != nil {
+	//		log.Println(token.Error())
+	//	}
+	//}()
 
 	// receive message and DO
 
