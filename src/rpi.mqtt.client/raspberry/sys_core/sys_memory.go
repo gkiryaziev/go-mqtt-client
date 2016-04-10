@@ -20,7 +20,7 @@ func newMemory(c *mqtt.Client, name string, debug bool) *Memory {
 	return &Memory{
 		client: c,
 		debug:  debug,
-		topic:  name + "/SYSMEM",
+		topic:  name + "/SYSTEM/MEMORY",
 	}
 }
 

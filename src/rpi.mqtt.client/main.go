@@ -43,10 +43,6 @@ func main() {
 	rpi.Cpu.CoreVolt.Publish(config.Timeout, 0)
 	rpi.System.Memory.Publish(config.Timeout, 0)
 
-	// Run subscribe
-	err = rpi.Led0(0)
-	CheckError(err)
-
 	// wait for terminating
 	for {
 		select {
