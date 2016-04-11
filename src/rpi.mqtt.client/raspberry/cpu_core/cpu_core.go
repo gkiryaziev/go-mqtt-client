@@ -9,7 +9,7 @@ type Cpu struct {
 	CoreVolt     *CoreVolt
 }
 
-func NewCpu(c *mqtt.Client, name string, debug bool) *Cpu {
+func NewCpu(c mqtt.Client, name string, debug bool) *Cpu {
 	return &Cpu{
 		Themperature: newThemperature(c, name, debug),
 		CoreVolt:     newCoreVolt(c, name, debug),

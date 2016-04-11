@@ -8,7 +8,7 @@ import (
 )
 
 // open mqtt connection
-func NewMqttClient(protocol, address, port string, qos byte) (*mqtt.Client, error) {
+func NewMqttClient(protocol, address, port string, qos byte) (mqtt.Client, error) {
 	// generate new uuid
 	id := uuid.New()
 	// concat address
@@ -29,6 +29,6 @@ func NewMqttClient(protocol, address, port string, qos byte) (*mqtt.Client, erro
 	return client, nil
 }
 
-var defaultMessageHandler mqtt.MessageHandler = func(client *mqtt.Client, msg mqtt.Message) {
+func defaultMessageHandler(client mqtt.Client, msg mqtt.Message) {
 	log.Printf("TOPIC: %s, MSG: %s\n", msg.Topic(), msg.Payload())
 }

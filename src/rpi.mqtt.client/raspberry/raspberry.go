@@ -8,13 +8,13 @@ import (
 )
 
 type raspberry struct {
-	client *mqtt.Client
+	client mqtt.Client
 	name   string
 	Cpu    *cpu_core.Cpu
 	System *sys_core.System
 }
 
-func NewRaspberry(c *mqtt.Client, name string, debug bool) *raspberry {
+func NewRaspberry(c mqtt.Client, name string, debug bool) *raspberry {
 	return &raspberry{
 		client: c,
 		name:   name,

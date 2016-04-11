@@ -11,12 +11,12 @@ import (
 )
 
 type Memory struct {
-	client *mqtt.Client
+	client mqtt.Client
 	debug  bool
 	topic  string
 }
 
-func newMemory(c *mqtt.Client, name string, debug bool) *Memory {
+func newMemory(c mqtt.Client, name string, debug bool) *Memory {
 	return &Memory{
 		client: c,
 		debug:  debug,

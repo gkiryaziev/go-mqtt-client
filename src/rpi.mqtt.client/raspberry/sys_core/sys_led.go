@@ -7,12 +7,12 @@ import (
 )
 
 type Led struct {
-	client *mqtt.Client
+	client mqtt.Client
 	debug  bool
 	topic  string
 }
 
-func newLed(c *mqtt.Client, name string, debug bool) *Led {
+func newLed(c mqtt.Client, name string, debug bool) *Led {
 	return &Led{
 		client: c,
 		debug:  debug,
@@ -45,7 +45,7 @@ func (this *Led) UnSubscribe() {
 }
 
 // LED0 onMessage handler
-func (this *Led) ledOnMessage(client *mqtt.Client, msg mqtt.Message) {
+func (this *Led) ledOnMessage(client mqtt.Client, msg mqtt.Message) {
 
 	// debug
 	if this.debug {

@@ -11,12 +11,12 @@ import (
 )
 
 type CoreVolt struct {
-	client *mqtt.Client
+	client mqtt.Client
 	debug  bool
 	topic  string
 }
 
-func newCoreVolt(c *mqtt.Client, name string, debug bool) *CoreVolt {
+func newCoreVolt(c mqtt.Client, name string, debug bool) *CoreVolt {
 	return &CoreVolt{
 		client: c,
 		debug:  debug,

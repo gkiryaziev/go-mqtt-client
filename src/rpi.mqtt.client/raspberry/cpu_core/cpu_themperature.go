@@ -11,12 +11,12 @@ import (
 )
 
 type Themperature struct {
-	client *mqtt.Client
+	client mqtt.Client
 	debug  bool
 	topic  string
 }
 
-func newThemperature(c *mqtt.Client, name string, debug bool) *Themperature {
+func newThemperature(c mqtt.Client, name string, debug bool) *Themperature {
 	return &Themperature{
 		client: c,
 		debug:  debug,

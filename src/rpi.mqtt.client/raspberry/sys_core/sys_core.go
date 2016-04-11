@@ -9,7 +9,7 @@ type System struct {
 	Led    *Led
 }
 
-func NewSystem(c *mqtt.Client, name string, debug bool) *System {
+func NewSystem(c mqtt.Client, name string, debug bool) *System {
 	return &System{
 		Memory: newMemory(c, name, debug),
 		Led:    newLed(c, name, debug),

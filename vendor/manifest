@@ -4,7 +4,7 @@
 		{
 			"importpath": "github.com/eclipse/paho.mqtt.golang",
 			"repository": "https://github.com/eclipse/paho.mqtt.golang",
-			"revision": "183329365eb3c151b3f8403f90c89cf4e21ed739",
+			"revision": "0f7a459f04f13a41b7ed752d47944528d4bf9a86",
 			"branch": "master"
 		},
 		{
@@ -22,7 +22,7 @@
 		{
 			"importpath": "golang.org/x/net/websocket",
 			"repository": "https://go.googlesource.com/net",
-			"revision": "1600a4cd699d70009ec28edfd69d3568f6bd757d",
+			"revision": "e45385e9b226f570b1f086bf287b25d3d4117776",
 			"branch": "master",
 			"path": "/websocket"
 		},
