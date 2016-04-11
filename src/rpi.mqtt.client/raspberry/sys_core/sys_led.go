@@ -54,7 +54,7 @@ func (this *Led) Subscribe(qos byte) {
 
 	log.Println("[RUN] Subscribing:", this.topic + "/ACTION")
 
-	if token := this.client.Subscribe(this.topic + "/ACTION", qos, ledOnMessage); token.Wait() && token.Error() != nil {
+	if token := this.client.Subscribe(this.topic + "/ACTION", qos, this.ledOnMessage); token.Wait() && token.Error() != nil {
 		log.Println(token.Error())
 	}
 }
@@ -70,7 +70,8 @@ func (this *Led) UnSubscribe() {
 }
 
 // LED0 onMessage handler
-var ledOnMessage mqtt.MessageHandler = func(client *mqtt.Client, msg mqtt.Message) {
+// var ledOnMessage mqtt.MessageHandler
+func (this *Led) ledOnMessage(client *mqtt.Client, msg mqtt.Message) {
 
 	// debug
 	if gDebug {
