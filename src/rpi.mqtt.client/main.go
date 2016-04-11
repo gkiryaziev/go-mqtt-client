@@ -44,7 +44,7 @@ func main() {
 	rpi.System.Memory.Publish(config.Timeout, 0)
 
 	// Run subscribing
-	rpi.System.Led.Subscribe(0)
+	rpi.System.Led.Subscribe(2)
 
 	// wait for terminating
 	for {
@@ -52,6 +52,7 @@ func main() {
 		case <-interrupt:
 			log.Println("Clean and terminating...")
 
+			// Unsubscribe when terminating
 			rpi.System.Led.UnSubscribe()
 
 			// disconnecting

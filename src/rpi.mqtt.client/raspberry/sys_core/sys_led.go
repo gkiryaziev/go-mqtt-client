@@ -6,11 +6,6 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
-var (
-	gDebug bool   // global debug
-	gTopic string // global topic
-)
-
 type Led struct {
 	client *mqtt.Client
 	debug  bool
@@ -18,43 +13,21 @@ type Led struct {
 }
 
 func newLed(c *mqtt.Client, name string, debug bool) *Led {
-
-	// global variables for handler
-	gDebug = debug
-	gTopic = name + "/SYSTEM/LED0"
-
 	return &Led{
 		client: c,
-		debug:  gDebug,
-		topic:  gTopic,
-	}
-}
-
-// Publish led status only once
-func (this *Led) PublishOnce(qos byte) {
-
-	// get led status
-	status := "OFF"
-
-	topic := this.topic + "/STATUS"
-
-	// publish result
-	if token := this.client.Publish(topic, qos, false, status); token.Wait() && token.Error() != nil {
-		log.Println(token.Error())
-	}
-
-	// debug
-	if this.debug {
-		log.Println("[PUB]", topic, status)
+		debug:  debug,
+		topic:  name + "/SYSTEM/LED0",
 	}
 }
 
 // Subscribe
 func (this *Led) Subscribe(qos byte) {
 
-	log.Println("[RUN] Subscribing:", this.topic + "/ACTION")
+	topic := this.topic + "/ACTION"
 
-	if token := this.client.Subscribe(this.topic + "/ACTION", qos, this.ledOnMessage); token.Wait() && token.Error() != nil {
+	log.Println("[RUN] Subscribing:", topic)
+
+	if token := this.client.Subscribe(topic, qos, this.ledOnMessage); token.Wait() && token.Error() != nil {
 		log.Println(token.Error())
 	}
 }
@@ -62,26 +35,36 @@ func (this *Led) Subscribe(qos byte) {
 // Subscribe
 func (this *Led) UnSubscribe() {
 
-	log.Println("[RUN] UnSubscribing:", this.topic + "/ACTION")
+	topic := this.topic + "/ACTION"
 
-	if token := this.client.Unsubscribe(this.topic + "/ACTION"); token.Wait() && token.Error() != nil {
+	log.Println("[RUN] UnSubscribing:", topic)
+
+	if token := this.client.Unsubscribe(topic); token.Wait() && token.Error() != nil {
 		log.Println(token.Error())
 	}
 }
 
 // LED0 onMessage handler
-// var ledOnMessage mqtt.MessageHandler
 func (this *Led) ledOnMessage(client *mqtt.Client, msg mqtt.Message) {
 
 	// debug
-	if gDebug {
+	if this.debug {
 		log.Println("[SUB]", msg.Topic(), string(msg.Payload()))
 	}
 
 	// receive message and DO
 	status := "OFF"
 
-	topic := gTopic + "/STATUS"
+	switch string(msg.Payload()) {
+	case "ON":
+		// logic when ON
+		status = "ON"
+	case "OFF":
+		// logic when OFF
+		status = "OFF"
+	}
+
+	topic := this.topic + "/STATUS"
 
 	// publish result
 	if token := client.Publish(topic, msg.Qos(), false, status); token.Wait() && token.Error() != nil {
@@ -89,7 +72,7 @@ func (this *Led) ledOnMessage(client *mqtt.Client, msg mqtt.Message) {
 	}
 
 	// debug
-	if gDebug {
+	if this.debug {
 		log.Println("[PUB]", topic, status)
 	}
 }
