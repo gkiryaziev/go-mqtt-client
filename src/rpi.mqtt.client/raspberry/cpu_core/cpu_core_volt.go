@@ -27,7 +27,7 @@ func newCoreVolt(c mqtt.Client, name string, debug bool) *CoreVolt {
 // Publish core volt in goroutine with timeout
 func (this *CoreVolt) Publish(timeout int, qos byte) {
 	go func() {
-		log.Println("[RUN] Publishing:", this.topic)
+		log.Println("[RUN] Publishing:", qos, this.topic)
 
 		time.Sleep(500 * time.Millisecond)
 
@@ -51,7 +51,7 @@ func (this *CoreVolt) PublishOnce(qos byte) {
 
 		// debug
 		if this.debug {
-			log.Println("[PUB]", this.topic, cpuCoreVolt)
+			log.Println("[PUB]", qos, this.topic, cpuCoreVolt)
 		}
 	}
 }

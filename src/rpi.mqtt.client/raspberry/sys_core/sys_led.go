@@ -25,7 +25,7 @@ func (this *Led) Subscribe(qos byte) {
 
 	topic := this.topic + "/ACTION"
 
-	log.Println("[RUN] Subscribing:", topic)
+	log.Println("[RUN] Subscribing:", qos, topic)
 
 	if token := this.client.Subscribe(topic, qos, this.ledOnMessage); token.Wait() && token.Error() != nil {
 		log.Println(token.Error())
@@ -49,7 +49,7 @@ func (this *Led) ledOnMessage(client mqtt.Client, msg mqtt.Message) {
 
 	// debug
 	if this.debug {
-		log.Println("[SUB]", msg.Topic(), string(msg.Payload()))
+		log.Println("[SUB]", msg.Qos(), msg.Topic(), string(msg.Payload()))
 	}
 
 	// receive message and DO
@@ -73,6 +73,6 @@ func (this *Led) ledOnMessage(client mqtt.Client, msg mqtt.Message) {
 
 	// debug
 	if this.debug {
-		log.Println("[PUB]", topic, status)
+		log.Println("[PUB]", msg.Qos(), topic, status)
 	}
 }

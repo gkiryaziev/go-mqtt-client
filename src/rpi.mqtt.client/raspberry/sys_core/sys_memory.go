@@ -27,7 +27,7 @@ func newMemory(c mqtt.Client, name string, debug bool) *Memory {
 // Publish system memory in goroutine with timeout
 func (this *Memory) Publish(timeout int, qos byte) {
 	go func() {
-		log.Println("[RUN] Publishing:", this.topic)
+		log.Println("[RUN] Publishing:", qos, this.topic)
 
 		time.Sleep(500 * time.Millisecond)
 
@@ -56,7 +56,7 @@ func (this *Memory) PublishOnce(qos byte) {
 
 		// debug
 		if this.debug {
-			log.Println("[PUB]", topicMemTotal, sysMem["MemTotal"])
+			log.Println("[PUB]", qos, topicMemTotal, sysMem["MemTotal"])
 		}
 
 		// publish free memory
@@ -66,7 +66,7 @@ func (this *Memory) PublishOnce(qos byte) {
 
 		// debug
 		if this.debug {
-			log.Println("[PUB]", topicMemFree, sysMem["MemFree"])
+			log.Println("[PUB]", qos, topicMemFree, sysMem["MemFree"])
 		}
 
 		// publish available memory
@@ -76,7 +76,7 @@ func (this *Memory) PublishOnce(qos byte) {
 
 		// debug
 		if this.debug {
-			log.Println("[PUB]", topicMemAvailable, sysMem["MemAvailable"])
+			log.Println("[PUB]", qos, topicMemAvailable, sysMem["MemAvailable"])
 		}
 	}
 }

@@ -27,7 +27,7 @@ func newThemperature(c mqtt.Client, name string, debug bool) *Themperature {
 // Publish core themperature in goroutine with timeout
 func (this *Themperature) Publish(timeout int, qos byte) {
 	go func() {
-		log.Println("[RUN] Publishing:", this.topic)
+		log.Println("[RUN] Publishing:", qos, this.topic)
 
 		time.Sleep(500 * time.Millisecond)
 
@@ -51,7 +51,7 @@ func (this *Themperature) PublishOnce(qos byte) {
 
 		// debug
 		if this.debug {
-			log.Println("[PUB]", this.topic, cpuTemp)
+			log.Println("[PUB]", qos, this.topic, cpuTemp)
 		}
 
 	}
