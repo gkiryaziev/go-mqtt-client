@@ -8,9 +8,9 @@
 #### 2. Install GB
   `go get -u github.com/constabulary/gb/...`
 #### 3. Clone project
-  `git clone https://gkiryaziev@bitbucket.org/gkiryazievteam/rpi_mqtt_client.git`
+  `git clone https://github.com/gkiryaziev/go_raspberry_pi_mqtt_client.git`
 #### 4. Restore vendors
-  `cd rpi_mqtt_client`
+  `cd go_raspberry_pi_mqtt_client`
   
   `gb vendor restore`
 #### 5. Edit configuration
