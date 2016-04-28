@@ -10,4 +10,3 @@ func Clean(str string, args ...string) string {
 	str = strings.TrimSpace(str)
 	return str
 }
-
