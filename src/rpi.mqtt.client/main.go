@@ -20,7 +20,8 @@ func CheckError(err error) {
 
 func main() {
 	// config
-	config := conf.GetConfig()
+	config, err := conf.NewConfig("config.yaml").Load()
+	CheckError(err)
 
 	// interrupt
 	interrupt := make(chan os.Signal)

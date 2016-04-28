@@ -1,19 +1,32 @@
 package conf
 
 import (
-	"github.com/jinzhu/configor"
+	"io/ioutil"
+
+	"gopkg.in/yaml.v2"
 )
 
-var (
-	config *Config
-)
-
-func init() {
-	configor.Load(&config, "config.yaml")
+type config struct {
+	file string
 }
 
-func GetConfig() *Config {
-	return config
+func NewConfig(file string) *config {
+	return &config{file}
+}
+
+func (this *config) Load() (*Config, error) {
+	data, err := ioutil.ReadFile(this.file)
+	if err != nil {
+		return nil, err
+	}
+
+	var config *Config
+
+	err = yaml.Unmarshal(data, &config)
+	if err != nil {
+		return nil, err
+	}
+	return config, nil
 }
 
 type Config struct {
