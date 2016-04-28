@@ -10,10 +10,12 @@ type config struct {
 	file string
 }
 
+// NewConfig constructor
 func NewConfig(file string) *config {
 	return &config{file}
 }
 
+// Load config from file
 func (this *config) Load() (*Config, error) {
 	data, err := ioutil.ReadFile(this.file)
 	if err != nil {
