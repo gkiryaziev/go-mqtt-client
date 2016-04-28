@@ -2,6 +2,8 @@
 .git/
 *.xmind
 
+video/
+
 config.yaml
 
 bin/
