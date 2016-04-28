@@ -5,10 +5,11 @@ import (
 )
 
 type Cpu struct {
-	Themperature *Themperature
-	CoreVolt     *CoreVolt
+	Themperature *themperature
+	CoreVolt     *coreVolt
 }
 
+// NewCpu constructor
 func NewCpu(c mqtt.Client, name string, debug bool) *Cpu {
 	return &Cpu{
 		Themperature: newThemperature(c, name, debug),

@@ -6,22 +6,22 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
-type Led struct {
+type led struct {
 	client mqtt.Client
 	debug  bool
 	topic  string
 }
 
-func newLed(c mqtt.Client, name string, debug bool) *Led {
-	return &Led{
+func newLed(c mqtt.Client, name string, debug bool) *led {
+	return &led{
 		client: c,
 		debug:  debug,
 		topic:  name + "/SYSTEM/LED0",
 	}
 }
 
-// Subscribe
-func (this *Led) Subscribe(qos byte) {
+// Subscribe to topic
+func (this *led) Subscribe(qos byte) {
 
 	topic := this.topic + "/ACTION"
 
@@ -32,8 +32,8 @@ func (this *Led) Subscribe(qos byte) {
 	}
 }
 
-// Subscribe
-func (this *Led) UnSubscribe() {
+// UnSubscribe from topic
+func (this *led) UnSubscribe() {
 
 	topic := this.topic + "/ACTION"
 
@@ -44,8 +44,7 @@ func (this *Led) UnSubscribe() {
 	}
 }
 
-// LED0 onMessage handler
-func (this *Led) ledOnMessage(client mqtt.Client, msg mqtt.Message) {
+func (this *led) ledOnMessage(client mqtt.Client, msg mqtt.Message) {
 
 	// debug
 	if this.debug {

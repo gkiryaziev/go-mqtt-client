@@ -10,14 +10,14 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
-type Themperature struct {
+type themperature struct {
 	client mqtt.Client
 	debug  bool
 	topic  string
 }
 
-func newThemperature(c mqtt.Client, name string, debug bool) *Themperature {
-	return &Themperature{
+func newThemperature(c mqtt.Client, name string, debug bool) *themperature {
+	return &themperature{
 		client: c,
 		debug:  debug,
 		topic:  name + "/CPU/TEMP",
@@ -25,7 +25,7 @@ func newThemperature(c mqtt.Client, name string, debug bool) *Themperature {
 }
 
 // Publish core themperature in goroutine with timeout
-func (this *Themperature) Publish(timeout int, qos byte) {
+func (this *themperature) Publish(timeout int, qos byte) {
 	go func() {
 		log.Println("[RUN] Publishing:", qos, this.topic)
 
@@ -38,8 +38,8 @@ func (this *Themperature) Publish(timeout int, qos byte) {
 	}()
 }
 
-// Publish core themperature only once
-func (this *Themperature) PublishOnce(qos byte) {
+// PublishOnce core themperature only once
+func (this *themperature) PublishOnce(qos byte) {
 
 	cpuTemp := vcgencmd.Clean(service.CmdExec("vcgencmd", "measure_temp"), "temp=", "'C")
 
@@ -57,5 +57,5 @@ func (this *Themperature) PublishOnce(qos byte) {
 	}
 }
 
-// Subscribe
-func (this *Themperature) Subscribe() {}
+// Subscribe to topic
+func (this *themperature) Subscribe() {}

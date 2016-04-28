@@ -10,14 +10,14 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
-type Memory struct {
+type memory struct {
 	client mqtt.Client
 	debug  bool
 	topic  string
 }
 
-func newMemory(c mqtt.Client, name string, debug bool) *Memory {
-	return &Memory{
+func newMemory(c mqtt.Client, name string, debug bool) *memory {
+	return &memory{
 		client: c,
 		debug:  debug,
 		topic:  name + "/SYSTEM/MEMORY",
@@ -25,7 +25,7 @@ func newMemory(c mqtt.Client, name string, debug bool) *Memory {
 }
 
 // Publish system memory in goroutine with timeout
-func (this *Memory) Publish(timeout int, qos byte) {
+func (this *memory) Publish(timeout int, qos byte) {
 	go func() {
 		log.Println("[RUN] Publishing:", qos, this.topic)
 
@@ -39,7 +39,7 @@ func (this *Memory) Publish(timeout int, qos byte) {
 }
 
 // Publish system memory only once
-func (this *Memory) PublishOnce(qos byte) {
+func (this *memory) PublishOnce(qos byte) {
 
 	topicMemTotal := this.topic + "/TOTAL"
 	topicMemFree := this.topic + "/FREE"
@@ -81,5 +81,5 @@ func (this *Memory) PublishOnce(qos byte) {
 	}
 }
 
-// Subscribe
-func (this *Memory) Subscribe() {}
+// Subscribe to topic
+func (this *memory) Subscribe() {}

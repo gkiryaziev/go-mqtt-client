@@ -2,7 +2,7 @@ package meminfo
 
 import "strings"
 
-// cat /proc/meminfo cleaner (MemTotal: MemFree: MemAvailable:)
+// Clean cat /proc/meminfo cleaner (MemTotal: MemFree: MemAvailable:)
 func Clean(str string, args ...string) map[string]string {
 	if str == "" {
 		return nil

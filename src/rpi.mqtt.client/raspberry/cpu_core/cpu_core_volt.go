@@ -10,14 +10,14 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
-type CoreVolt struct {
+type coreVolt struct {
 	client mqtt.Client
 	debug  bool
 	topic  string
 }
 
-func newCoreVolt(c mqtt.Client, name string, debug bool) *CoreVolt {
-	return &CoreVolt{
+func newCoreVolt(c mqtt.Client, name string, debug bool) *coreVolt {
+	return &coreVolt{
 		client: c,
 		debug:  debug,
 		topic:  name + "/CPU/CORE/VOLT",
@@ -25,7 +25,7 @@ func newCoreVolt(c mqtt.Client, name string, debug bool) *CoreVolt {
 }
 
 // Publish core volt in goroutine with timeout
-func (this *CoreVolt) Publish(timeout int, qos byte) {
+func (this *coreVolt) Publish(timeout int, qos byte) {
 	go func() {
 		log.Println("[RUN] Publishing:", qos, this.topic)
 
@@ -38,8 +38,8 @@ func (this *CoreVolt) Publish(timeout int, qos byte) {
 	}()
 }
 
-// Publish core volt only once
-func (this *CoreVolt) PublishOnce(qos byte) {
+// PublishOnce core volt only once
+func (this *coreVolt) PublishOnce(qos byte) {
 
 	cpuCoreVolt := vcgencmd.Clean(service.CmdExec("vcgencmd", "measure_volts", "core"), "volt=", "V")
 
@@ -56,5 +56,5 @@ func (this *CoreVolt) PublishOnce(qos byte) {
 	}
 }
 
-// Subscribe
-func (this *CoreVolt) Subscribe() {}
+// Subscribe to topic
+func (this *coreVolt) Subscribe() {}

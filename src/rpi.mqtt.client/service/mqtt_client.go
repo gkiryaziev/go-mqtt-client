@@ -7,7 +7,7 @@ import (
 	"github.com/pborman/uuid"
 )
 
-// open mqtt connection
+// NewMqttClient open mqtt connection
 func NewMqttClient(protocol, address, port string, qos byte) (mqtt.Client, error) {
 	// generate new uuid
 	id := uuid.New()

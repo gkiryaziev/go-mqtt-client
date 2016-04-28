@@ -5,10 +5,11 @@ import (
 )
 
 type System struct {
-	Memory *Memory
-	Led    *Led
+	Memory *memory
+	Led    *led
 }
 
+// NewSystem constructor
 func NewSystem(c mqtt.Client, name string, debug bool) *System {
 	return &System{
 		Memory: newMemory(c, name, debug),

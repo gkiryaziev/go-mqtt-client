@@ -11,7 +11,7 @@ import (
 	"rpi.mqtt.client/service"
 )
 
-// check error
+// CheckError check error
 func CheckError(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -40,8 +40,8 @@ func main() {
 	rpi := raspberry.NewRaspberry(client, config.Name, config.Debug)
 
 	// Run publisher
-	rpi.Cpu.Themperature.Publish(config.Timeout, 0)
-	rpi.Cpu.CoreVolt.Publish(config.Timeout, 0)
+	rpi.CPU.Themperature.Publish(config.Timeout, 0)
+	rpi.CPU.CoreVolt.Publish(config.Timeout, 0)
 	rpi.System.Memory.Publish(config.Timeout, 0)
 
 	// Run subscribing

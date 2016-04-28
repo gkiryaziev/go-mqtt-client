@@ -10,15 +10,16 @@ import (
 type raspberry struct {
 	client mqtt.Client
 	name   string
-	Cpu    *cpu_core.Cpu
+	CPU    *cpu_core.Cpu
 	System *sys_core.System
 }
 
+// NewRaspberry constructor
 func NewRaspberry(c mqtt.Client, name string, debug bool) *raspberry {
 	return &raspberry{
 		client: c,
 		name:   name,
-		Cpu:    cpu_core.NewCpu(c, name, debug),
+		CPU:    cpu_core.NewCpu(c, name, debug),
 		System: sys_core.NewSystem(c, name, debug),
 	}
 }

@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-// exec command
+// CmdExec exec command
 func CmdExec(name string, args ...string) string {
 	out, err := exec.Command(name, args...).Output()
 	if err != nil {
