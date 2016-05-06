@@ -1,10 +1,10 @@
 package raspberry
 
 import (
-	"rpi.mqtt.client/raspberry/cpu_core"
-	"rpi.mqtt.client/raspberry/sys_core"
-
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+
+	"github.com/gkiryaziev/go-mqtt-client/raspberry/cpu_core"
+	"github.com/gkiryaziev/go-mqtt-client/raspberry/sys_core"
 )
 
 type raspberry struct {
@@ -14,7 +14,7 @@ type raspberry struct {
 	System *sys_core.System
 }
 
-// NewRaspberry constructor
+// NewRaspberry return new raspberry object.
 func NewRaspberry(c mqtt.Client, name string, debug bool) *raspberry {
 	return &raspberry{
 		client: c,

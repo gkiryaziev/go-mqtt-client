@@ -9,7 +9,7 @@ type Cpu struct {
 	CoreVolt     *coreVolt
 }
 
-// NewCpu constructor
+// NewCpu return new Cpu object.
 func NewCpu(c mqtt.Client, name string, debug bool) *Cpu {
 	return &Cpu{
 		Themperature: newThemperature(c, name, debug),

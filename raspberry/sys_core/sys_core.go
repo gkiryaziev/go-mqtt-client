@@ -9,7 +9,7 @@ type System struct {
 	Led    *led
 }
 
-// NewSystem constructor
+// NewSystem return new System object.
 func NewSystem(c mqtt.Client, name string, debug bool) *System {
 	return &System{
 		Memory: newMemory(c, name, debug),

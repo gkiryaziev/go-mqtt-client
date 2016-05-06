@@ -6,13 +6,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	"rpi.mqtt.client/conf"
-	"rpi.mqtt.client/raspberry"
-	"rpi.mqtt.client/service"
+	"github.com/gkiryaziev/go-mqtt-client/conf"
+	"github.com/gkiryaziev/go-mqtt-client/raspberry"
+	"github.com/gkiryaziev/go-mqtt-client/service"
 )
 
-// CheckError check error
-func CheckError(err error) {
+// checkError check error
+func checkError(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -21,7 +21,7 @@ func CheckError(err error) {
 func main() {
 	// config
 	config, err := conf.NewConfig("config.yaml").Load()
-	CheckError(err)
+	checkError(err)
 
 	// interrupt
 	interrupt := make(chan os.Signal)
@@ -34,7 +34,7 @@ func main() {
 		config.Mqtt.Port,
 		0,
 	)
-	CheckError(err)
+	checkError(err)
 
 	// new instance of mqtt client
 	rpi := raspberry.NewRaspberry(client, config.Name, config.Debug)

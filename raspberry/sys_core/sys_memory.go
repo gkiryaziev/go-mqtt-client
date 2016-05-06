@@ -4,10 +4,10 @@ import (
 	"log"
 	"time"
 
-	"rpi.mqtt.client/service"
-	"rpi.mqtt.client/service/meminfo"
-
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+
+	"github.com/gkiryaziev/go-mqtt-client/service"
+	"github.com/gkiryaziev/go-mqtt-client/service/meminfo"
 )
 
 type memory struct {
@@ -16,6 +16,7 @@ type memory struct {
 	topic  string
 }
 
+// newMemory return new memory object.
 func newMemory(c mqtt.Client, name string, debug bool) *memory {
 	return &memory{
 		client: c,
@@ -38,7 +39,7 @@ func (this *memory) Publish(timeout int, qos byte) {
 	}()
 }
 
-// Publish system memory only once
+// PublishOnce publish system memory only once
 func (this *memory) PublishOnce(qos byte) {
 
 	topicMemTotal := this.topic + "/TOTAL"

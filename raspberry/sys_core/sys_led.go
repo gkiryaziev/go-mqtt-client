@@ -12,6 +12,7 @@ type led struct {
 	topic  string
 }
 
+// NewSystem return new led object.
 func newLed(c mqtt.Client, name string, debug bool) *led {
 	return &led{
 		client: c,
@@ -44,6 +45,7 @@ func (this *led) UnSubscribe() {
 	}
 }
 
+// ledOnMessage set Led to on or of
 func (this *led) ledOnMessage(client mqtt.Client, msg mqtt.Message) {
 
 	// debug

@@ -4,10 +4,10 @@ import (
 	"log"
 	"time"
 
-	"rpi.mqtt.client/service"
-	"rpi.mqtt.client/service/vcgencmd"
-
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+
+	"github.com/gkiryaziev/go-mqtt-client/service"
+	"github.com/gkiryaziev/go-mqtt-client/service/vcgencmd"
 )
 
 type coreVolt struct {
@@ -16,6 +16,7 @@ type coreVolt struct {
 	topic  string
 }
 
+// newCoreVolt return new coreVolt object.
 func newCoreVolt(c mqtt.Client, name string, debug bool) *coreVolt {
 	return &coreVolt{
 		client: c,

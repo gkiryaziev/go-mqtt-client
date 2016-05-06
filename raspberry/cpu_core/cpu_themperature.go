@@ -4,10 +4,10 @@ import (
 	"log"
 	"time"
 
-	"rpi.mqtt.client/service"
-	"rpi.mqtt.client/service/vcgencmd"
-
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+
+	"github.com/gkiryaziev/go-mqtt-client/service"
+	"github.com/gkiryaziev/go-mqtt-client/service/vcgencmd"
 )
 
 type themperature struct {
@@ -16,6 +16,7 @@ type themperature struct {
 	topic  string
 }
 
+// newThemperature return new themperature object.
 func newThemperature(c mqtt.Client, name string, debug bool) *themperature {
 	return &themperature{
 		client: c,
