@@ -3,23 +3,24 @@ package raspberry
 import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 
-	"github.com/gkiryaziev/go-mqtt-client/raspberry/cpu_core"
-	"github.com/gkiryaziev/go-mqtt-client/raspberry/sys_core"
+	"github.com/gkiryaziev/go-mqtt-client/raspberry/cpucore"
+	"github.com/gkiryaziev/go-mqtt-client/raspberry/syscore"
 )
 
-type raspberry struct {
+// Raspberry struct
+type Raspberry struct {
 	client mqtt.Client
 	name   string
-	CPU    *cpu_core.Cpu
-	System *sys_core.System
+	CPU    *cpucore.CPU
+	System *syscore.System
 }
 
 // NewRaspberry return new raspberry object.
-func NewRaspberry(c mqtt.Client, name string, debug bool) *raspberry {
-	return &raspberry{
+func NewRaspberry(c mqtt.Client, name string, debug bool) *Raspberry {
+	return &Raspberry{
 		client: c,
 		name:   name,
-		CPU:    cpu_core.NewCpu(c, name, debug),
-		System: sys_core.NewSystem(c, name, debug),
+		CPU:    cpucore.NewCPU(c, name, debug),
+		System: syscore.NewSystem(c, name, debug),
 	}
 }

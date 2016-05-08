@@ -1,4 +1,4 @@
-package sys_core
+package syscore
 
 import (
 	"log"
@@ -22,34 +22,34 @@ func newLed(c mqtt.Client, name string, debug bool) *led {
 }
 
 // Subscribe to topic
-func (this *led) Subscribe(qos byte) {
+func (l *led) Subscribe(qos byte) {
 
-	topic := this.topic + "/ACTION"
+	topic := l.topic + "/ACTION"
 
 	log.Println("[RUN] Subscribing:", qos, topic)
 
-	if token := this.client.Subscribe(topic, qos, this.ledOnMessage); token.Wait() && token.Error() != nil {
+	if token := l.client.Subscribe(topic, qos, l.ledOnMessage); token.Wait() && token.Error() != nil {
 		log.Println(token.Error())
 	}
 }
 
 // UnSubscribe from topic
-func (this *led) UnSubscribe() {
+func (l *led) UnSubscribe() {
 
-	topic := this.topic + "/ACTION"
+	topic := l.topic + "/ACTION"
 
 	log.Println("[RUN] UnSubscribing:", topic)
 
-	if token := this.client.Unsubscribe(topic); token.Wait() && token.Error() != nil {
+	if token := l.client.Unsubscribe(topic); token.Wait() && token.Error() != nil {
 		log.Println(token.Error())
 	}
 }
 
 // ledOnMessage set Led to on or of
-func (this *led) ledOnMessage(client mqtt.Client, msg mqtt.Message) {
+func (l *led) ledOnMessage(client mqtt.Client, msg mqtt.Message) {
 
 	// debug
-	if this.debug {
+	if l.debug {
 		log.Println("[SUB]", msg.Qos(), msg.Topic(), string(msg.Payload()))
 	}
 
@@ -65,7 +65,7 @@ func (this *led) ledOnMessage(client mqtt.Client, msg mqtt.Message) {
 		status = "OFF"
 	}
 
-	topic := this.topic + "/STATUS"
+	topic := l.topic + "/STATUS"
 
 	// publish result
 	if token := client.Publish(topic, msg.Qos(), false, status); token.Wait() && token.Error() != nil {
@@ -73,7 +73,7 @@ func (this *led) ledOnMessage(client mqtt.Client, msg mqtt.Message) {
 	}
 
 	// debug
-	if this.debug {
+	if l.debug {
 		log.Println("[PUB]", msg.Qos(), topic, status)
 	}
 }
