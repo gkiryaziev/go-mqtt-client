@@ -1,4 +1,4 @@
-package cpu_core
+package cpucore
 
 import (
 	"log"
@@ -26,37 +26,37 @@ func newThemperature(c mqtt.Client, name string, debug bool) *themperature {
 }
 
 // Publish core themperature in goroutine with timeout
-func (this *themperature) Publish(timeout int, qos byte) {
+func (t *themperature) Publish(timeout int, qos byte) {
 	go func() {
-		log.Println("[RUN] Publishing:", qos, this.topic)
+		log.Println("[RUN] Publishing:", qos, t.topic)
 
 		time.Sleep(500 * time.Millisecond)
 
 		for {
-			this.PublishOnce(qos)
+			t.PublishOnce(qos)
 			time.Sleep(time.Duration(timeout) * time.Millisecond)
 		}
 	}()
 }
 
 // PublishOnce core themperature only once
-func (this *themperature) PublishOnce(qos byte) {
+func (t *themperature) PublishOnce(qos byte) {
 
 	cpuTemp := vcgencmd.Clean(service.CmdExec("vcgencmd", "measure_temp"), "temp=", "'C")
 
 	if cpuTemp != "" {
 
-		if token := this.client.Publish(this.topic, qos, false, cpuTemp); token.Wait() && token.Error() != nil {
+		if token := t.client.Publish(t.topic, qos, false, cpuTemp); token.Wait() && token.Error() != nil {
 			log.Println(token.Error())
 		}
 
 		// debug
-		if this.debug {
-			log.Println("[PUB]", qos, this.topic, cpuTemp)
+		if t.debug {
+			log.Println("[PUB]", qos, t.topic, cpuTemp)
 		}
 
 	}
 }
 
 // Subscribe to topic
-func (this *themperature) Subscribe() {}
+func (t *themperature) Subscribe() {}

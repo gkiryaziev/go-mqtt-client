@@ -6,18 +6,19 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type config struct {
+// ConfigManager struct
+type ConfigManager struct {
 	file string
 }
 
 // NewConfig constructor
-func NewConfig(file string) *config {
-	return &config{file}
+func NewConfig(file string) *ConfigManager {
+	return &ConfigManager{file}
 }
 
 // Load config from file
-func (this *config) Load() (*Config, error) {
-	data, err := ioutil.ReadFile(this.file)
+func (cm *ConfigManager) Load() (*Config, error) {
+	data, err := ioutil.ReadFile(cm.file)
 	if err != nil {
 		return nil, err
 	}
@@ -31,6 +32,7 @@ func (this *config) Load() (*Config, error) {
 	return config, nil
 }
 
+// Config struct
 type Config struct {
 	Debug   bool   `yaml:"debug"`
 	Timeout int    `yaml:"timeout"`
@@ -38,6 +40,7 @@ type Config struct {
 	Mqtt    Mqtt   `yaml:"mqtt"`
 }
 
+// Mqtt struct
 type Mqtt struct {
 	Protocol string `yaml:"protocol"`
 	Address  string `yaml:"address"`

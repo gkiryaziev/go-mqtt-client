@@ -1,9 +1,10 @@
-package sys_core
+package syscore
 
 import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
+// System struct
 type System struct {
 	Memory *memory
 	Led    *led

@@ -1,4 +1,4 @@
-package cpu_core
+package cpucore
 
 import (
 	"log"
@@ -26,36 +26,36 @@ func newCoreVolt(c mqtt.Client, name string, debug bool) *coreVolt {
 }
 
 // Publish core volt in goroutine with timeout
-func (this *coreVolt) Publish(timeout int, qos byte) {
+func (cv *coreVolt) Publish(timeout int, qos byte) {
 	go func() {
-		log.Println("[RUN] Publishing:", qos, this.topic)
+		log.Println("[RUN] Publishing:", qos, cv.topic)
 
 		time.Sleep(500 * time.Millisecond)
 
 		for {
-			this.PublishOnce(qos)
+			cv.PublishOnce(qos)
 			time.Sleep(time.Duration(timeout) * time.Millisecond)
 		}
 	}()
 }
 
 // PublishOnce core volt only once
-func (this *coreVolt) PublishOnce(qos byte) {
+func (cv *coreVolt) PublishOnce(qos byte) {
 
 	cpuCoreVolt := vcgencmd.Clean(service.CmdExec("vcgencmd", "measure_volts", "core"), "volt=", "V")
 
 	if cpuCoreVolt != "" {
 
-		if token := this.client.Publish(this.topic, qos, false, cpuCoreVolt); token.Wait() && token.Error() != nil {
+		if token := cv.client.Publish(cv.topic, qos, false, cpuCoreVolt); token.Wait() && token.Error() != nil {
 			log.Println(token.Error())
 		}
 
 		// debug
-		if this.debug {
-			log.Println("[PUB]", qos, this.topic, cpuCoreVolt)
+		if cv.debug {
+			log.Println("[PUB]", qos, cv.topic, cpuCoreVolt)
 		}
 	}
 }
 
 // Subscribe to topic
-func (this *coreVolt) Subscribe() {}
+func (cv *coreVolt) Subscribe() {}
