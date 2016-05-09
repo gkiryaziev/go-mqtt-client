@@ -3,23 +3,38 @@ package meminfo
 import "testing"
 
 func TestClean(t *testing.T) {
-	in := "MemTotal:         996784 kB\n" +
-		"MemFree:          918592 kB\n" +
-		"MemAvailable:     938892 kB\n" +
-		"Buffers:            7364 kB\n" +
-		"Cached:            37604 kB\n"
 
-	result := Clean(in, "MemTotal:", "MemFree:", "MemAvailable:")
+	var tests = []struct {
+		data         string
+		memTotal     string
+		memFree      string
+		memAvailable string
+	}{{
+		data: "MemTotal:         996784 kB\n" +
+			"MemFree:          918592 kB\n" +
+			"MemAvailable:     938892 kB\n",
+		memTotal:     "996784",
+		memFree:      "918592",
+		memAvailable: "938892",
+	}}
 
-	if result == nil {
-		t.Error("Error, result = nil.")
-	}
+	for _, test := range tests {
+		result := Clean(test.data, "MemTotal:", "MemFree:", "MemAvailable:")
 
-	memTotal := result["MemTotal"]
-	memFree := result["MemFree"]
-	memAvailable := result["MemAvailable"]
+		if result == nil {
+			t.Error("Error, result = nil.")
+		}
 
-	if memTotal != "996784" || memFree != "918592" || memAvailable != "938892" {
-		t.Errorf("Error, MemTotal = %s, MemFree = %s, MemAvailable = %s", memTotal, memFree, memAvailable)
+		if test.memTotal != result["MemTotal"] {
+			t.Error(test.memTotal, "!=", result["MemTotal"])
+		}
+
+		if test.memFree != result["MemFree"] {
+			t.Error(test.memFree, "!=", result["MemFree"])
+		}
+
+		if test.memAvailable != result["MemAvailable"] {
+			t.Error(test.memAvailable, "!=", result["MemAvailable"])
+		}
 	}
 }

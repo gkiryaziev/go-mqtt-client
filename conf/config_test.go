@@ -12,16 +12,16 @@ func TestLoad(t *testing.T) {
 	// check parameters
 	switch {
 	case config.Debug != true && config.Debug != false:
-		t.Error("Error reading Debug parameter.")
+		t.Error("Error, Debug =", config.Debug)
 	case config.Timeout == 0:
-		t.Error("Error reading Timeout parameter.")
+		t.Error("Error, Timeout = 0")
 	case config.Name == "":
-		t.Error("Error reading Name parameter.")
-	case config.Mqtt.Protocol == "":
-		t.Error("Error reading Protocol parameter.")
+		t.Error("Error, Name is empty.")
+	case config.Mqtt.Protocol != "tcp":
+		t.Error("Error, Protocol =", config.Mqtt.Protocol)
 	case config.Mqtt.Address == "":
-		t.Error("Error reading Address parameter.")
+		t.Error("Error, Address is empty.")
 	case config.Mqtt.Port == "":
-		t.Error("Error reading Port parameter.")
+		t.Error("Error, Port is empty.")
 	}
 }

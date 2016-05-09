@@ -3,13 +3,19 @@ package vcgencmd
 import "testing"
 
 func TestClean(t *testing.T) {
-	in := "temp=34.7'C"
 
-	out := "34.7"
+	var tests = []struct {
+		data     string
+		expected string
+	}{{
+		data:     "temp=34.7'C",
+		expected: "34.7",
+	}}
 
-	result := Clean(in, "temp=", "'C")
-
-	if result != out {
-		t.Errorf("Error, expected %s but return %s", out, result)
+	for _, test := range tests {
+		result := Clean(test.data, "temp=", "'C")
+		if test.expected != result {
+			t.Error(test.expected, "!=", result)
+		}
 	}
 }
