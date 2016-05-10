@@ -1,5 +1,7 @@
 ##	Golang MQTT Client for Raspberry PI 2
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/gkiryaziev/go-mqtt-client)](https://goreportcard.com/report/github.com/gkiryaziev/go-mqtt-client)
+
 [Go](https://golang.org/) mqtt client with [Paho M2M](http://www.eclipse.org/paho/clients/golang/) library.
 
 ### Installation:
