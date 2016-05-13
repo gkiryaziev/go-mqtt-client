@@ -1,0 +1,11 @@
+package: github.com/gkiryaziev/go-mqtt-client
+import:
+- package: github.com/eclipse/paho.mqtt.golang
+  subpackages:
+  - github.com\eclipse\paho.mqtt.golang
+- package: github.com/pborman/uuid
+  subpackages:
+  - github.com\pborman\uuid
+- package: gopkg.in/yaml.v2
+  subpackages:
+  - gopkg.in\yaml.v2

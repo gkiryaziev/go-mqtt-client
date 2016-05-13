@@ -1,0 +1,21 @@
+hash: ebdfc66f263ab3f156c55824015584cf7ec8db0167c407bfc1a3aabb75805115
+updated: 2016-05-13T18:11:06.4218997+03:00
+imports:
+- name: github.com/eclipse/paho.mqtt.golang
+  version: 2dac3f59a0f5c9a46e5ee307ce6c972809129005
+  subpackages:
+  - github.com\eclipse\paho.mqtt.golang
+  - packets
+- name: github.com/pborman/uuid
+  version: c55201b036063326c5b1b89ccfe45a184973d073
+  subpackages:
+  - github.com\pborman\uuid
+- name: golang.org/x/net
+  version: 96dbb961a39ddccf16860cdd355bfa639c497f23
+  subpackages:
+  - websocket
+- name: gopkg.in/yaml.v2
+  version: a83829b6f1293c91addabc89d0571c246397bbf4
+  subpackages:
+  - gopkg.in\yaml.v2
+devImports: []
