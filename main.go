@@ -6,6 +6,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	yamlCfg "github.com/gkiryaziev/go-config-manager/yaml"
+
 	"github.com/gkiryaziev/go-mqtt-client/conf"
 	"github.com/gkiryaziev/go-mqtt-client/raspberry"
 	"github.com/gkiryaziev/go-mqtt-client/service"
@@ -19,8 +21,11 @@ func checkError(err error) {
 }
 
 func main() {
-	// config
-	config, err := conf.NewConfig("config.yaml").Load()
+	// config object
+	var config conf.Config
+
+	// config manager
+	err := yamlCfg.NewConfig("config.yaml").Load(&config)
 	checkError(err)
 
 	// interrupt
