@@ -1,9 +1,8 @@
 all: main
 
-.PHONY: main clean test bench install uninstall
+.PHONY: main install uninstall clean test bench lint
 
 main:
-	goimports -w .
 	go build
 
 uninstall:
@@ -17,3 +16,9 @@ test:
 
 bench:
 	go test -bench=. -benchmem
+
+lint:
+	go fmt ./...
+	goimports -w .
+	golint ./...
+	go vet ./...

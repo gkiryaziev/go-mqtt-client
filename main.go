@@ -50,7 +50,7 @@ func main() {
 	rpi.System.Memory.Publish(config.Timeout, 0)
 
 	// Run subscribing
-	rpi.System.Led.Subscribe(2)
+	rpi.System.Led0.Subscribe(2)
 
 	// wait for terminating
 	for {
@@ -59,7 +59,7 @@ func main() {
 			log.Println("Clean and terminating...")
 
 			// Unsubscribe when terminating
-			rpi.System.Led.UnSubscribe()
+			rpi.System.Led0.UnSubscribe()
 
 			// disconnecting
 			client.Disconnect(250)
