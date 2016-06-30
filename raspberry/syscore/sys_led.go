@@ -1,11 +1,10 @@
 package syscore
 
 import (
+	"io/ioutil"
 	"log"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
-
-	"github.com/gkiryaziev/go-mqtt-client/service"
 )
 
 /*
@@ -33,6 +32,10 @@ Functions:
 		echo 0 | sudo tee /sys/class/leds/led0/brightness
 	Get brightness status
 		sudo cat /sys/class/leds/led0/brightness
+
+TODO:
+[ ] catch errors in ledMessageHandler
+
 */
 type led struct {
 	client mqtt.Client
@@ -107,30 +110,35 @@ func (l *led) ledMessageHandler(client mqtt.Client, msg mqtt.Message) {
 	switch string(msg.Payload()) {
 	case "0":
 		// logic when OFF
-		ledAction(l.ledID, string(msg.Payload()))
-		l.status = ledStatus(l.ledID)
+		setBrightness(l.ledID, string(msg.Payload()))
+		l.status, _ = getBrightness(l.ledID)
 		l.PublishStatus(0)
 	case "1":
 		// logic when ON
-		ledAction(l.ledID, string(msg.Payload()))
-		l.status = ledStatus(l.ledID)
+		setBrightness(l.ledID, string(msg.Payload()))
+		l.status, _ = getBrightness(l.ledID)
 		l.PublishStatus(0)
 	case "STATUS":
 		// publish status
-		l.status = ledStatus(l.ledID)
+		l.status, _ = getBrightness(l.ledID)
 		l.PublishStatus(0)
 	}
 }
 
-// ledAction
-func ledAction(ledID, action string) {
-	file := "/sys/class/leds/led" + ledID + "/brightness"
-	service.WriteFile(file, action)
+// getBrightness
+func getBrightness(ledID string) (string, error) {
+	dat, err := ioutil.ReadFile("/sys/class/leds/led" + ledID + "/brightness")
+	if err != nil {
+		return "", err
+	}
+	return string(dat), nil
 }
 
-// ledStatus
-func ledStatus(ledID string) string {
-	file := "/sys/class/leds/led" + ledID + "/brightness"
-	s, _ := service.ReadFile(file, 1)
-	return s
+// setBrightness
+func setBrightness(ledID, data string) error {
+	err := ioutil.WriteFile("/sys/class/leds/led"+ledID+"/brightness", []byte(data), 0644)
+	if err != nil {
+		return err
+	}
+	return nil
 }
