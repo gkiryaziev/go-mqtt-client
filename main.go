@@ -51,6 +51,7 @@ func main() {
 
 	// Run subscribing
 	rpi.System.Led0.Subscribe(2)
+	rpi.System.Led1.Subscribe(2)
 
 	// wait for terminating
 	for {
@@ -60,6 +61,7 @@ func main() {
 
 			// Unsubscribe when terminating
 			rpi.System.Led0.UnSubscribe()
+			rpi.System.Led1.UnSubscribe()
 
 			// disconnecting
 			client.Disconnect(250)

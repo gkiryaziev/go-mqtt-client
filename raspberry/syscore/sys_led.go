@@ -3,6 +3,7 @@ package syscore
 import (
 	"io/ioutil"
 	"log"
+	"strings"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
@@ -131,7 +132,8 @@ func getBrightness(ledID string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return string(dat), nil
+
+	return strings.Trim(string(dat), "\r\n"), nil
 }
 
 // setBrightness
